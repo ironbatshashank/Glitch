@@ -16,6 +16,7 @@ var register = mongoose.model("register", glitchSchema);
 
 // globals
 var ClassMarkerQuizID = process.env.QUIZ || 'rnr5c573c471796d';
+var Port = process.env.PORT || 3000;
 
 //adding css files to the node server.
 app.use(express.static('public'));
@@ -56,7 +57,7 @@ app.get("/:randomText", function(req, res){
 });
 
 //LISTNING PORT INFORMATION
- app.listen(3000, "0.0.0.0", function(){
+ app.listen(Port, "0.0.0.0", function(){
 	console.log("Server is live at port 3000");
 	console.log("Quiz ID: " + ClassMarkerQuizID);
  });
