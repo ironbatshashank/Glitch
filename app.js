@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-mongoose.connect('mongodb://localhost:27017/glitch', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/glitch', { useNewUrlParser: true });
 
 //Schema Setup.
 var glitchSchema = new mongoose.Schema({
@@ -14,18 +14,13 @@ var glitchSchema = new mongoose.Schema({
 
 var register = mongoose.model("register", glitchSchema);
 
-
-
+// globals
+var ClassMarkerQuizID = process.env.QUIZ || 'rnr5c573c471796d';
+var Port = process.env.PORT || 3000;
 
 //adding css files to the node server.
 app.use(express.static('public'));
-
-
-
 app.set("view engine", "ejs");
-
-
-
 
 // ROUTING PART STARTS HERE
 app.get("/", function(req, res){
@@ -53,21 +48,16 @@ app.post("/register",urlencodedParser, function(req, res){
 	});		 
 });
 
-
 app.get("/quiz", function(req, res){
-	res.render("questions");
+	res.render("quiz", { quiz: ClassMarkerQuizID });
 });
-
-
 
 app.get("/:randomText", function(req, res){
 	res.render("other");
 });
 
-
-
-
 //LISTNING PORT INFORMATION
- app.listen(3000, "0.0.0.0", function(){
+ app.listen(Port, "0.0.0.0", function(){
 	console.log("Server is live at port 3000");
+	console.log("Quiz ID: " + ClassMarkerQuizID);
  });
